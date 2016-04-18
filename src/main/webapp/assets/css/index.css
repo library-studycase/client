@@ -1,0 +1,82 @@
+hr {
+    margin-top: 0px;
+    margin-bottom: 12px;
+}
+
+tr {
+    cursor: pointer;
+}
+
+thead {
+    background-color: #E9E9E9;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/*table*/
+table {
+    vertical-align: middle;
+}
+
+.number {
+    width: 45px;
+}
+
+.age {
+    width: 75px;
+}
+
+.date-creation {
+    width: 155px;
+}
+
+.name-left {
+    border-right: 0px !important;
+}
+
+.name-right {
+    width: 90px;
+    border-left: 0px !important;
+}
+/*****table*/
+
+.v-indent-12 {
+    width: 100%;
+    height: 12px;
+}
+
+.nav-paginator {
+    text-align: center;
+}
+
+.table-wrapper {
+    /*height: 130px;*/
+}
+
+.add-user-wrapper {
+    text-align: right;
+}
+
+.to-user-list {
+    text-align: right;
+}
+
+.dlt-btn-wrapper {
+    text-align: right;
+}
+
+.name-err {
+    color: red;
+    position: relative;
+    top: 33px;
+    font-size: 12px;
+}
+
+.age-err {
+    color: red;
+    position: relative;
+    top: 90px;
+    font-size: 12px;
+}

@@ -1,0 +1,35 @@
+.gradle
+build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+
+angularjs-maven-tomcat.iml
+src/main/node_modules
+src/main/webapp/node_modules
+src/main/webapp/test_out
+src/main/webapp/npm-debug.log
+src/main/webapp/assets/bower_components

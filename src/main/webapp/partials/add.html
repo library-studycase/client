@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Добавление книги</h3>
+        </div>
+    </div>
+    <div class="row">
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 to-user-list">
+            <a href="/">к списку книг</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <form ng-submit="submit();">
+                <div class="form-group">
+                    <label for="book-name">Название книги</label>
+                    <input type="text" ng-model="form.name"
+                           class="form-control" id="book-name" placeholder="Название книги">
+                </div>
+                <div class="form-group">
+                    <label for="author-name">Автор</label>
+                    <input type="text" ng-model="form.author"
+                           class="form-control" id="author-name" placeholder="Автор">
+                </div>
+                <div class="form-group">
+                    <label for="author-name">Описание</label>
+                    <input type="text" ng-model="form.description"
+                           class="form-control" id="description" placeholder="Описание">
+                </div>
+                <div class="form-group">
+                    <label for="user-age">Количество страниц</label>
+                    <input type="text" ng-model="form.pages" maxlength="5" class="form-control"
+                           id="user-age" placeholder="Количество страниц">
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-success btn-sm">Добавить</button>
+            </form>
+        </div>
+    </div>
+</div><!-- /container -->

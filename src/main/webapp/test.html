@@ -1,0 +1,27 @@
+<html ng-app="testApp">
+<head>
+    <script src="/assets/bower_components/angular/angular.js"></script>
+    <script src="/assets/js/test.js"></script>
+</head>
+
+<body ng-controller="BookListCtrl">
+
+<div ng-click="hello()">Hello World!!!</div>
+
+    Search: <input ng-model="query">
+    <hr>
+    Sort by:
+    <select ng-model="orderProp">
+        <option value="id">By ID</option>
+        <option value="pages">By pages</option>
+    </select>
+    <hr>
+    <ul>
+        <li ng-repeat="book in books | filter:query | orderBy:orderProp">
+            <p>id = {{book.id}}</p>
+            <p>name = {{book.name}}</p>
+            <p>pages = {{book.pages | checkmark}}</p>
+        </li>
+    </ul>
+</body>
+</html>
