@@ -21,7 +21,7 @@ public class RedirectFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         String path = req.getRequestURI().substring(req.getContextPath().length());
 
-        if (path.startsWith("/partials") || path.startsWith("/assets")  || path.equals("/test.html")) {
+        if (path.startsWith("/partials") || path.startsWith("/assets")) {
             request.getRequestDispatcher(path).forward(request, response); // Goes to controller servlet.
         } else {
             request.getRequestDispatcher("/").forward(request, response); // Goes to controller servlet.

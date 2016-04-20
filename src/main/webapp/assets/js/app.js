@@ -19,10 +19,6 @@ app.config(['$routeProvider', '$locationProvider', '$httpProvider',
                 templateUrl: root + 'partials/main.html',
                 controller: 'BookListCtrl'
             }
-        ).when('/test', {
-            templateUrl: root + 'partials/test.html',
-            controller: ''
-        }
         ).when('/add', {
             templateUrl: root + 'partials/add.html',
             controller: 'BookAddCtrl'
@@ -30,7 +26,11 @@ app.config(['$routeProvider', '$locationProvider', '$httpProvider',
         .when('/books/:bookId', {
                 templateUrl: root + 'partials/edit.html',
                 controller: 'BookEditCtrl'
-            }
+            })
+        .when('/login', {
+            templateUrl: root + 'partials/login.html',
+            controller: 'LoginCtrl'
+        }
         ).otherwise({
             redirectTo: root
         });

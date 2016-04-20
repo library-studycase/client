@@ -80,3 +80,8 @@ table {
     top: 90px;
     font-size: 12px;
 }
+
+
+.hide {display:none;}
+.login {margin:20px;}
+.break {border:1px solid #f1f1f1;display:block;margin:20px 0;}

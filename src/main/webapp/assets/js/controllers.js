@@ -12,16 +12,20 @@ bookControllers.controller('BookListCtrl', ['$scope', '$location', 'BookInfo', f
 
     var promiseGetBooks = BookInfo.getBooks($scope.offset, $scope.limit);
     promiseGetBooks.then(
-        function(data) {
+        function (data) {
             //$scope.data = data.data; // {books, total}
             $scope.books = data.data.books;
             $scope.total = data.data.total;
 
             $scope.pages = Math.ceil($scope.total / limit);
             $scope.activePage = Math.floor($scope.offset / limit) + 1;
+        },
+        function (err) {
+            alert('Authorization error');
+            $locationProvider.path('/login');
         }
-    ); //may add addition catches and thens
-;
+    );
+
     $scope.go = function (path) {
         $locationProvider.search({}); //cleans get params from address bar
         $locationProvider.path(path);
@@ -31,7 +35,7 @@ bookControllers.controller('BookListCtrl', ['$scope', '$location', 'BookInfo', f
         $locationProvider.path('/books/' + bookId);
     }
 
-    $scope.range = function(min, max, step) {
+    $scope.range = function (min, max, step) {
         if (max <= 1) return [];
 
         step = step || 1;
@@ -42,10 +46,10 @@ bookControllers.controller('BookListCtrl', ['$scope', '$location', 'BookInfo', f
         return input;
     };
 
-    $scope.showPage = function(numberOfPage) {
+    $scope.showPage = function (numberOfPage) {
         var offset = limit * (numberOfPage - 1) + 1;
         var params = {
-            'offset' : offset
+            'offset': offset
         };
         $locationProvider.path('/').search(params);
     }
@@ -61,8 +65,12 @@ bookControllers.controller('BookAddCtrl', ['$scope', '$location', 'BookInfo', fu
         var promiseUpdateBook = BookInfo.addBook(Book);
 
         promiseUpdateBook.then(
-            function(data) {
+            function (data) {
                 $locationProvider.path('/');
+            },
+            function (err) {
+                alert('Authorization error');
+                $locationProvider.path('/login');
             }
         );
     }
@@ -73,23 +81,29 @@ bookControllers.controller('BookEditCtrl', ['$scope', '$location', '$routeParams
     console.log('started "BookEditCtrl" controller');
 
     var Book = {
-        id : $routeParams.bookId
+        id: $routeParams.bookId
     }
     var promiseGetBook = BookInfo.getBook(Book);
     promiseGetBook.then(
-        function(data) {
+        function (data) {
             $scope.book = data.data;
+        },
+        function (err) {
+            alert('Authorization error');
         }
     );
 
     $scope.save = function () {
         var Book = $scope.book;
         var promiseBookUpdate = BookInfo.updateBook(Book);
+
         promiseBookUpdate.then(
-            function(data) {
+            function (data) {
                 $locationProvider.path('/');
             }
-        );
+        ).catch(function (data) {
+            alert('Authorization error');
+        });
     }
 
     $scope.remove = function () {
@@ -98,9 +112,37 @@ bookControllers.controller('BookEditCtrl', ['$scope', '$location', '$routeParams
         console.log(BookInfo);
         var promiseBookUpdate = BookInfo.removeBook(Book);
         promiseBookUpdate.then(
-            function(data) {
+            function (data) {
                 $locationProvider.search({}); //cleans get params from address bar
                 $locationProvider.path('/');
+            },
+            function (err) {
+                alert('Authorization error');
+                $locationProvider.path('/login');
+            }
+        );
+    }
+}]);
+
+bookControllers.controller('LoginCtrl', ['$scope', '$location', '$routeParams', '$http', function ($scope, $locationProvider, $routeParams, $http) {
+    console.log('started "LoginCtrl" controller');
+
+    //var promise = $http.post('http://spbnb-prc796.t-systems.ru:8082/tokens',
+    $http.get(server + 'book?offset=1&limit=1').then(
+        result => {$locationProvider.path('/');}
+    );
+
+    $scope.submit = function () {
+        var promise = $http.post('http://spbnb-prc796.t-systems.ru:8082/tokens',
+            JSON.stringify($scope.form)
+        );
+        promise.then(
+            result => {
+                alert('Successful authorization');
+                $locationProvider.path('/');
+            },
+            error => {
+                alert('Authorization error');
             }
         );
     }
