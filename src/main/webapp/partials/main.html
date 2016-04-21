@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-lg-4">
-            <input type="search" class="form-control" placeholder="Название книги" ng-model="name">
+            <input type="search" class="form-control" placeholder="Название книги" ng-model="title">
         </div>
         <div class="col-lg-8 add-user-wrapper">
             <a class="btn btn-success btn-sm" type="button" ng-click="go('/add')">Добавить книгу</a>
@@ -28,9 +28,9 @@
                     <th>Количество страниц</th>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="book in books | filter:name" ng-click="edit(book.id)">
+                    <tr ng-repeat="book in books | filter:title" ng-click="edit(book.id)">
                         <td>{{book.id}}</td>
-                        <td>{{book.name}}</td>
+                        <td>{{book.title}}</td>
                         <td>
                             {{book.author}}
                         </td>

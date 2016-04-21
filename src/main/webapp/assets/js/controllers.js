@@ -14,15 +14,15 @@ bookControllers.controller('BookListCtrl', ['$scope', '$location', 'BookInfo', f
     promiseGetBooks.then(
         function (data) {
             //$scope.data = data.data; // {books, total}
-            $scope.books = data.data.books;
-            $scope.total = data.data.total;
+            $scope.books = data.books;
+            $scope.total = data.total;
 
             $scope.pages = Math.ceil($scope.total / limit);
             $scope.activePage = Math.floor($scope.offset / limit) + 1;
         },
         function (err) {
-            alert('Authorization error');
-            $locationProvider.path('/login');
+            /*alert('Authorization error');
+            $locationProvider.path('/login');*/
         }
     );
 
@@ -69,8 +69,8 @@ bookControllers.controller('BookAddCtrl', ['$scope', '$location', 'BookInfo', fu
                 $locationProvider.path('/');
             },
             function (err) {
-                alert('Authorization error');
-                $locationProvider.path('/login');
+                /*alert('Authorization error');
+                $locationProvider.path('/login');*/
             }
         );
     }
@@ -86,10 +86,10 @@ bookControllers.controller('BookEditCtrl', ['$scope', '$location', '$routeParams
     var promiseGetBook = BookInfo.getBook(Book);
     promiseGetBook.then(
         function (data) {
-            $scope.book = data.data;
+            $scope.book = data;
         },
         function (err) {
-            alert('Authorization error');
+            //alert('Authorization error');
         }
     );
 
@@ -102,7 +102,7 @@ bookControllers.controller('BookEditCtrl', ['$scope', '$location', '$routeParams
                 $locationProvider.path('/');
             }
         ).catch(function (data) {
-            alert('Authorization error');
+           // alert('Authorization error');
         });
     }
 
@@ -117,8 +117,8 @@ bookControllers.controller('BookEditCtrl', ['$scope', '$location', '$routeParams
                 $locationProvider.path('/');
             },
             function (err) {
-                alert('Authorization error');
-                $locationProvider.path('/login');
+               /* alert('Authorization error');
+                $locationProvider.path('/login');*/
             }
         );
     }
@@ -142,7 +142,7 @@ bookControllers.controller('LoginCtrl', ['$scope', '$location', '$routeParams', 
                 $locationProvider.path('/');
             },
             error => {
-                alert('Authorization error');
+                //alert('Authorization error');
             }
         );
     }
