@@ -1,6 +1,8 @@
 var app = angular.module('myApp', ['ngRoute', 'bookControllers', 'ngCookies', 'bookServices']);
 var server = 'http://spbnb-prc789:8080/';
 var root = '/';
+var limit = 5;
+var IdP = 'http://spbnb-prc796.t-systems.ru:8082/tokens';
 
 app.config(['$routeProvider', '$locationProvider', '$httpProvider',
     //$locationProvider.html5Mode(true);
@@ -13,7 +15,7 @@ app.config(['$routeProvider', '$locationProvider', '$httpProvider',
         });
 
         //It needs for the same session with many gets
-        $httpProvider.defaults.withCredentials = true;
+        //$httpProvider.defaults.withCredentials = true;
 
         $routeProvider.when(root, {
                 templateUrl: root + 'partials/main.html',
@@ -39,10 +41,3 @@ app.config(['$routeProvider', '$locationProvider', '$httpProvider',
 /*.run(['$http', '$cookies', function ($http, $cookies) {
  $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
  }]);*/
-
-transformRequest = function (obj) {
-    var str = [];
-    for (var p in obj)
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-    return str.join("&");
-}

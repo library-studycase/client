@@ -1,28 +1,24 @@
 'use strict'
 
-/* Controllers */
+//Controllers
 var bookControllers = angular.module('bookControllers', []);
-var limit = 5;
 
 bookControllers.controller('BookListCtrl', ['$scope', '$location', 'BookInfo', function ($scope, $locationProvider, BookInfo) {
     console.log('started "BookListCtrl" controller');
     var getParams = $locationProvider.search();
-    $scope.offset = (getParams.offset != undefined) ? getParams.offset : 1;
-    $scope.limit = limit;
+    var offset = (getParams.offset != undefined) ? getParams.offset : 1;
 
-    var promiseGetBooks = BookInfo.getBooks($scope.offset, $scope.limit);
-    promiseGetBooks.then(
+    BookInfo.query({offset: offset, limit: limit}).$promise.then(
         function (data) {
-            //$scope.data = data.data; // {books, total}
             $scope.books = data.books;
-            $scope.total = data.total;
-
-            $scope.pages = Math.ceil($scope.total / limit);
-            $scope.activePage = Math.floor($scope.offset / limit) + 1;
+            var total = data.total;
+            //--
+            $scope.pages = Math.ceil(total / limit);
+            $scope.activePage = Math.floor(offset / limit) + 1;
         },
         function (err) {
-            /*alert('Authorization error');
-            $locationProvider.path('/login');*/
+            alert('Authorization error');
+            $locationProvider.path('/login');
         }
     );
 
@@ -62,15 +58,12 @@ bookControllers.controller('BookAddCtrl', ['$scope', '$location', 'BookInfo', fu
         console.log('submitting form of adding a book');
 
         var Book = $scope.form;
-        var promiseUpdateBook = BookInfo.addBook(Book);
-
-        promiseUpdateBook.then(
+        BookInfo.save(Book).$promise.then(
             function (data) {
                 $locationProvider.path('/');
             },
             function (err) {
-                /*alert('Authorization error');
-                $locationProvider.path('/login');*/
+                alert('Error. The book hasn\'t been added');
             }
         );
     }
@@ -83,67 +76,61 @@ bookControllers.controller('BookEditCtrl', ['$scope', '$location', '$routeParams
     var Book = {
         id: $routeParams.bookId
     }
-    var promiseGetBook = BookInfo.getBook(Book);
-    promiseGetBook.then(
+
+    BookInfo.get(Book).$promise.then(
         function (data) {
             $scope.book = data;
         },
         function (err) {
-            //alert('Authorization error');
+            alert('Cannot get information about a book. Try to refresh the page.');
         }
     );
 
-    $scope.save = function () {
+    $scope.update = function () {
+        console.log('update');
         var Book = $scope.book;
-        var promiseBookUpdate = BookInfo.updateBook(Book);
-
-        promiseBookUpdate.then(
+        var resource = BookInfo.update({id: Book.id}, Book);
+        resource.$promise.then(
             function (data) {
                 $locationProvider.path('/');
             }
         ).catch(function (data) {
-           // alert('Authorization error');
+            alert('Error. The book hasn\'t been edited');
         });
     }
 
     $scope.remove = function () {
-
         var Book = $scope.book;
-        console.log(BookInfo);
-        var promiseBookUpdate = BookInfo.removeBook(Book);
-        promiseBookUpdate.then(
+        var resource = BookInfo.remove({id: Book.id}).$promise;
+        resource.then(
             function (data) {
                 $locationProvider.search({}); //cleans get params from address bar
                 $locationProvider.path('/');
             },
             function (err) {
-               /* alert('Authorization error');
-                $locationProvider.path('/login');*/
+                alert('Error. The book hasn\'t been removed.');
             }
         );
     }
 }]);
 
-bookControllers.controller('LoginCtrl', ['$scope', '$location', '$routeParams', '$http', function ($scope, $locationProvider, $routeParams, $http) {
+bookControllers.controller('LoginCtrl', ['$scope', '$location', '$routeParams', '$http', 'Auth', function ($scope, $locationProvider, $routeParams, $http, Auth) {
     console.log('started "LoginCtrl" controller');
 
-    //var promise = $http.post('http://spbnb-prc796.t-systems.ru:8082/tokens',
-    $http.get(server + 'book?offset=1&limit=1').then(
-        result => {$locationProvider.path('/');}
-    );
+    Auth.isAuth().then(function (isAuth) {
+        if (isAuth) {
+            $locationProvider.path('/');
+        }
+    })
 
     $scope.submit = function () {
-        var promise = $http.post('http://spbnb-prc796.t-systems.ru:8082/tokens',
-            JSON.stringify($scope.form)
-        );
-        promise.then(
-            result => {
+        Auth.auth($scope.form).then(function (isAuth) {
+            if (isAuth) {
                 alert('Successful authorization');
                 $locationProvider.path('/');
-            },
-            error => {
-                //alert('Authorization error');
+            } else {
+                alert('Authorization error');
             }
-        );
+        })
     }
 }]);
