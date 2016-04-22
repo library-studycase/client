@@ -17,8 +17,12 @@ bookControllers.controller('BookListCtrl', ['$scope', '$location', 'BookInfo', f
             $scope.activePage = Math.floor(offset / limit) + 1;
         },
         function (err) {
-            alert('Authorization error');
-            $locationProvider.path('/login');
+            if (err.status == 401) {
+                alert('Authorization error');
+                $locationProvider.path('/login');
+            } else {
+                alert('Server error. Cannot get list of books.');
+            }
         }
     );
 
@@ -63,7 +67,13 @@ bookControllers.controller('BookAddCtrl', ['$scope', '$location', 'BookInfo', fu
                 $locationProvider.path('/');
             },
             function (err) {
-                alert('Error. The book hasn\'t been added');
+                if (err.status == 401) {
+                    alert('Authorization error');
+                    $locationProvider.path('/login');
+                } else {
+                    alert('Error. The book hasn\'t been added');
+                }
+
             }
         );
     }
@@ -82,7 +92,12 @@ bookControllers.controller('BookEditCtrl', ['$scope', '$location', '$routeParams
             $scope.book = data;
         },
         function (err) {
-            alert('Cannot get information about a book. Try to refresh the page.');
+            if (err.status == 401) {
+                alert('Authorization error');
+                $locationProvider.path('/login');
+            } else {
+                alert('Cannot get information about a book. Try to refresh the page.');
+            }
         }
     );
 
@@ -94,8 +109,13 @@ bookControllers.controller('BookEditCtrl', ['$scope', '$location', '$routeParams
             function (data) {
                 $locationProvider.path('/');
             }
-        ).catch(function (data) {
-            alert('Error. The book hasn\'t been edited');
+        ).catch(function (err) {
+            if (err.status == 401) {
+                alert('Authorization error');
+                $locationProvider.path('/login');
+            } else {
+                alert('Error. The book hasn\'t been edited');
+            }
         });
     }
 
@@ -108,7 +128,12 @@ bookControllers.controller('BookEditCtrl', ['$scope', '$location', '$routeParams
                 $locationProvider.path('/');
             },
             function (err) {
-                alert('Error. The book hasn\'t been removed.');
+                if (err.status == 401) {
+                    alert('Authorization error');
+                    $locationProvider.path('/login');
+                } else {
+                    alert('Error. The book hasn\'t been removed.');
+                }
             }
         );
     }
