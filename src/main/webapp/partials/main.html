@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h3>Библиотека</h3>
+            <h3>Library</h3>
         </div>
     </div>
     <div class="row">
@@ -9,10 +9,10 @@
     </div>
     <div class="row">
         <div class="col-lg-4">
-            <input type="search" class="form-control" placeholder="Название книги" ng-model="title">
+            <input type="search" class="form-control" placeholder="Name" ng-model="title">
         </div>
         <div class="col-lg-8 add-user-wrapper">
-            <a class="btn btn-success btn-sm" type="button" ng-click="go('/add')">Добавить книгу</a>
+            <a class="btn btn-success btn-sm" type="button" ng-click="go('/add')">Add a book</a>
         </div>
     </div>
     <div class="row v-indent-12"></div>
@@ -23,9 +23,9 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                     <th class="number">#</th>
-                    <th>Название</th>
-                    <th>Автор</th>
-                    <th>Количество страниц</th>
+                    <th>Name</th>
+                    <th>Author</th>
+                    <th>Pages</th>
                     </thead>
                     <tbody>
                     <tr ng-repeat="book in books | filter:title" ng-click="edit(book.id)">
