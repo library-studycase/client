@@ -1,8 +1,8 @@
 var app = angular.module('myApp', ['ngRoute', 'bookControllers', 'ngCookies', 'bookServices']);
-var server = 'http://spbnb-prc789:8080/';
+var server = 'http://localhost:8093/';
 var root = '/';
 var limit = 5;
-var IdP = 'http://spbnb-prc796.t-systems.ru:8082/tokens';
+var IdP = 'http://localhost:8092/tokens';
 
 app.config(['$routeProvider', '$locationProvider', '$httpProvider',
     //$locationProvider.html5Mode(true);
